@@ -5,7 +5,7 @@ export const ContainerBackground = styled.div `
 background-image: url(${imageBg});
 background-size: cover;
 width: 100vw;
-height: max-content;
+height: 100vh;
 margin: 0; 
 padding: 0;
 
