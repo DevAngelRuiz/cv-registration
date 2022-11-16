@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-
-export interface ICidade {
-  nome: string;
-  codigo_ibge: string;
-}
+import LocationService from "../services/LocationService";
+import { ICidade } from "../types/Cidade";
 
 export const useCidades = ({ uf }: any) => {
-  const [cidades, setCidades] = useState<ICidade[]>([]);
+  const [cidades, setCidades] = useState<ICidade[] | null>([]);
 
   useEffect(() => {
     if (!uf) return;
 
-    fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`)
-      .then((response) => response.json())
-      .then((data) => setCidades(data))
+    (async () => {
+      const states = await LocationService.getCitiesFromUf(uf);
+      setCidades(states);
+    })();
   }, [uf]);
 
   return {
-    cidades
-   
+    cidades,
   };
 };
